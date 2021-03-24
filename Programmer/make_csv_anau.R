@@ -31,7 +31,8 @@ for (i in 1:num_files){
 # Example full column name:
 # X.project.bf528.project_3.samples.SRR1178055__rn4_STAR__sortedByCoord.bam
 # names(comb_tib) <- substring(names(comb_tib), first=27, last=45)
-names(comb_tib) <- sub("X.project.bf528.project_3.samples", "exp", names(comb_tib))
+# TODO: adjust for our actual files: (can maybe instead remove first row?)
+names(comb_tib) <- sub("X.project.bf528.project_3.samples.", "", names(comb_tib))
 names(comb_tib) <- sub("__rn4_STAR__sortedByCoord.bam", "", names(comb_tib))
 
 # Write csv:
