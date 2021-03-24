@@ -6,6 +6,8 @@ source /etc/bashrc
 #$ -o run_featurecounts_anau.stdout
 #$ -e run_featurecounts_anau.stderr
 
+# This script will run featureCounts for samples stored in specified folder.
+
 # When running: qsub run_featurecounts_anau.sh
 # Check status: qstat -u anau
 
