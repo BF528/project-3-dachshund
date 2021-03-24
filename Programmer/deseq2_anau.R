@@ -1,7 +1,13 @@
-# 
+# Install packages:
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+BiocManager::install("DESeq2")
+
 
 # Import libraries:
 library(tidyverse)
+library(DESeq2)
 
 # Read in csv as dataframes:
 temp_ds_exp <- read.csv("featureCounts_combined.csv", header=TRUE)
@@ -20,14 +26,15 @@ names(temp_tib_ctrl)[names(temp_tib_ctrl)=="ctrl.Geneid"] <- "Geneid"
 # but not all rows in the control dataset (tib2)
 tib_comb1 <- left_join(temp_tib_exp, temp_tib_ctrl, by="Geneid")
 
-
+# filter out rows that have any zeros for funzies
+tib_comb2 <- subset(tib_comb1,rowSums(tib_comb1==0)==0)
 
 
 
 # # # Deseq example shell script:~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #R
 
-library(DESeq2)
+
 
 # load counts
 cnts <- read.csv('groups/group_EX_rna_counts.csv',row.names=1)
