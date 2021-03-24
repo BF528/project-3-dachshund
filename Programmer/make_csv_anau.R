@@ -2,6 +2,7 @@
 
 # Import libraries:
 library(tidyverse)
+library(janitor)
 
 # Get list of applicable file names:
 all_files <- list.files(pattern="^featureCounts_output.*txt$")
@@ -24,6 +25,14 @@ for (i in 1:num_files){
     comb_tib <- full_join(comb_tib, temp_tib, by="Geneid")
   }
 }
+
+# Shorten column names:
+# WARNING: THIS STEP MAY CAUSE ERRORS IF NOT UPDATED CORRECTLY
+# Example full column name:
+# X.project.bf528.project_3.samples.SRR1178055__rn4_STAR__sortedByCoord.bam
+# names(comb_tib) <- substring(names(comb_tib), first=27, last=45)
+names(comb_tib) <- sub("X.project.bf528.project_3.samples", "exp", names(comb_tib))
+names(comb_tib) <- sub("__rn4_STAR__sortedByCoord.bam", "", names(comb_tib))
 
 # Write csv:
 write.csv(comb_tib, file="featureCounts_combined.csv", row.names=FALSE)
