@@ -6,6 +6,8 @@ source /etc/bashrc
 #$ -o run_mutliqc_anau.stdout
 #$ -e run_multiqc_anau.stderr
 
+# This script will run multiqc for featureCounts stored in specified folder.
+
 # When running: qsub run_multiqc_anau.sh
 # Check status: qstat -u anau
 
