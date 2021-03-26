@@ -5,7 +5,7 @@
 # Rscript deseq2_anau.R
 
 #TODO update
-# If you want to install packages: 
+# If you want to install packages switch to TRUE: 
 if (FALSE){
   # Install packages:
   if (!requireNamespace("BiocManager", quietly = TRUE))
@@ -83,11 +83,19 @@ for (exp_group in exp_modes_of_action){
   
   # Get the experimental group sample names:
   temp_exp_sample_list <- meta$Run[meta$mode_of_action==exp_group]
-  print("Sample list:")
+  print("Sample experiment list:")
   print(temp_exp_sample_list)
   
+  #Grab list of applicable control samples (based on vehicle value):
+  exp_vehicle <- meta$vehicle[meta$Run==temp_exp_sample_list][1]
+  print("exp_vehicle:")
+  print(exp_vehicle)
+  control_list2 <- meta$Run[meta$vehicle==exp_vehicle & meta$mode_of_action=="Control"]
+  print("Control list:")
+  print(control_list2)
+  
   # Subset dataframe:
-  temp_tib <- tib_comb_subset[,c(temp_exp_sample_list, control_list)]
+  temp_tib <- tib_comb_subset[,c(temp_exp_sample_list, control_list2)]
   # Names of columns remaining:
   print("Columns kept:")
   print(names(temp_tib))
