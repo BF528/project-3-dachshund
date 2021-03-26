@@ -1,6 +1,7 @@
 # Runs deseq2_anau.R
 
 # To run from command line:
+# Adjust install package boolean in script if installing packages is needed
 # module load R/4.0.2
 # Rscript deseq2_anau.R
 
@@ -192,14 +193,24 @@ write.csv(data.frame(num_sig),"num_sig_genes_padj.csv", row.names=FALSE)
 
 # Create histograms for significant genes: -------------------------------------
 for (exp_group in exp_modes_of_action){
+  # Strip out weird characters from exp groups:
+  exp_group_str <- str_replace_all(exp_group, "[[:punct:]]", "")
+  temp_filename <- paste(exp_group_str, "siggene_hist.jpg", sep="_")
+  jpeg(temp_filename)
   hist(deseq_tib_list_sig_only[[exp_group]]$log2FoldChange, 
        breaks=30, xlim=c(-6, 6),
        main=exp_group, xlab="log2 Fold Change")
+  dev.off()
 } 
 
 # Create scatter plots fold change vs nominal p-value for significant genes:----
 for (exp_group in exp_modes_of_action){
- plot(deseq_tib_list_sig_only[[exp_group]]$log2FoldChange, 
-      deseq_tib_list_sig_only[[exp_group]]$pvalue)
-
+  # Strip out weird characters from exp groups:
+  exp_group_str <- str_replace_all(exp_group, "[[:punct:]]", "")
+  temp_filename <- paste(exp_group_str, "siggene_scatter.jpg", sep="_")
+  jpeg(temp_filename)
+  plot(deseq_tib_list_sig_only[[exp_group]]$log2FoldChange, 
+      deseq_tib_list_sig_only[[exp_group]]$pvalue,
+      main=exp_group, xlab="log2 Fold Change", ylab="nominal p-value")
+  dev.off()
 } 
