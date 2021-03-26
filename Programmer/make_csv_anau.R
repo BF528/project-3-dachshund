@@ -44,4 +44,5 @@ names(comb_tib) <- sub("X.projectnb2.bf528.users.dachshund.project_3.samples.STA
 names(comb_tib) <- sub("Aligned.sortedByCoord.out.bam", "", names(comb_tib))
 
 # Write csv:
+# (Geneid column labeled "Geneid" as in input datasets)
 write.csv(comb_tib, file="featureCounts_combined.csv", row.names=FALSE)
