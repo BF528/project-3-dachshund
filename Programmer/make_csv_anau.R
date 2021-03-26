@@ -4,9 +4,12 @@
 # module load R/4.0.2
 # Rscript make_csv_anau.R
 
-#Install janitor:
-install.packages("janitor", repos = "http://cran.us.r-project.org")
-
+# If you want to install packages switch to TRUE: 
+if (FALSE){
+  #Install janitor:
+  install.packages("janitor", repos = "http://cran.us.r-project.org")
+}
+  
 # Import libraries:
 library(tidyverse)
 library(janitor)
