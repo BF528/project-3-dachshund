@@ -4,7 +4,6 @@
 # module load R/4.0.2
 # Rscript deseq2_anau.R
 
-#TODO update
 # If you want to install packages switch to TRUE: 
 if (FALSE){
   # Install packages:
@@ -100,46 +99,55 @@ for (exp_group in exp_modes_of_action){
   print("Columns kept:")
   print(names(temp_tib))
   #Subset meta data:
-  temp_meta <- meta[meta$mode_of_action==exp_group | meta$mode_of_action=="Control",]
+  temp_meta <- meta[meta$mode_of_action==exp_group | (meta$mode_of_action=="Control" & meta$vehicle==exp_vehicle),]
   print("Meta data kept:")
   print(temp_meta)
   
-  # create the DESeq object
-  dds1 <- DESeqDataSetFromMatrix(
-    countData = temp_tib,
-    colData = temp_meta,
-    design= ~ mode_of_action
-  )
+  # Check order matches:
+  print("DOES ORDER MATCH?")
+  does_it_match <- length(names(temp_tib)) == sum(names(temp_tib)==temp_meta$Run)
+  print(does_it_match)
+  if(does_it_match){
+    # create the DESeq object
+    dds1 <- DESeqDataSetFromMatrix(
+      countData = temp_tib,
+      colData = temp_meta,
+      design= ~ mode_of_action
+    )
+    
+    # relevel mode_of_action as factor
+    dds1$mode_of_action <- relevel(dds1$mode_of_action, ref='Control')
+    
+    # run DESeq
+    dds1 <- DESeq(dds1)
+    # Adjust for our actual samples:
+    res1 <- results(dds1, contrast=c('mode_of_action', exp_group,'Control'))
+    res1 <- lfcShrink(dds1, coef=2)
   
-  # relevel mode_of_action as factor
-  dds1$mode_of_action <- relevel(dds1$mode_of_action, ref='Control')
-  
-  # run DESeq
-  dds1 <- DESeq(dds1)
-  # Adjust for our actual samples:
-  res1 <- results(dds1, contrast=c('mode_of_action', exp_group,'Control'))
-  res1 <- lfcShrink(dds1, coef=2)
-
-  # Order by adjusted p-val
-  res2 <- as_tibble(res1, rownames=NA)
-  res2 <- res2 %>% arrange(padj)
-  
-  # Append results to lists:
-  deseq_list[[exp_group]] <- res1
-  deseq_tib_list[[exp_group]] <- res2
-  
-  # Strip out weird characters from exp groups:
-  exp_group_str <- str_replace_all(exp_group, "[[:punct:]]", "")
-  print(exp_group)
-  print("Striped group name:")
-  print(exp_group_str)
-  
-  # write out DE results
-  write.csv(res2, paste(exp_group_str, 'deseq_results1.csv', sep="_"))
-  
-  # write out matrix of normalized counts
-  write.csv(counts(dds1,normalized=TRUE),
-            paste(exp_group_str, 'deseq_norm_counts1.csv', sep="_"))
+    # Order by adjusted p-val
+    res2 <- as_tibble(res1, rownames=NA)
+    res2 <- res2 %>% arrange(padj)
+    
+    # Append results to lists:
+    deseq_list[[exp_group]] <- res1
+    deseq_tib_list[[exp_group]] <- res2
+    
+    # Strip out weird characters from exp groups:
+    exp_group_str <- str_replace_all(exp_group, "[[:punct:]]", "")
+    print(exp_group)
+    print("Striped group name:")
+    print(exp_group_str)
+    
+    # write out DE results
+    write.csv(res2, paste(exp_group_str, 'deseq_results1.csv', sep="_"))
+    
+    # write out matrix of normalized counts
+    write.csv(counts(dds1,normalized=TRUE),
+              paste(exp_group_str, 'deseq_norm_counts1.csv', sep="_"))
+    
+  } else {
+      print("There is an issue with sample order prior to deseq analysis")
+    }
 }
 
 # Write table with top 10 results: --------------------------------------------
@@ -182,10 +190,16 @@ num_sig
 # Write to CSV:
 write.csv(data.frame(num_sig),"num_sig_genes_padj.csv", row.names=FALSE)
 
-# Create histograms -----------------------------------------------------------
-
+# Create histograms for significant genes: -------------------------------------
 for (exp_group in exp_modes_of_action){
   hist(deseq_tib_list_sig_only[[exp_group]]$log2FoldChange, 
        breaks=30, xlim=c(-6, 6),
        main=exp_group, xlab="log2 Fold Change")
+} 
+
+# Create scatter plots fold change vs nominal p-value for significant genes:----
+for (exp_group in exp_modes_of_action){
+ plot(deseq_tib_list_sig_only[[exp_group]]$log2FoldChange, 
+      deseq_tib_list_sig_only[[exp_group]]$pvalue)
+
 } 
