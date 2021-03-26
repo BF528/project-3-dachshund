@@ -2,7 +2,6 @@
 
 # Import libraries:
 library(tidyverse)
-library(ggplot2)
 
 # Read in csv as tibbles:
 ds1 <- as_tibble(read.csv("featureCounts_combined.csv", header=TRUE))
@@ -17,12 +16,16 @@ print(meta1[,c("Run", "mode_of_action")])
 previouspar<-par(no.readonly=TRUE)
 
 #------------------------------------------------------------------------------
-
 # Create boxplot:
 # Create boxplot, with labels horizontal (1) and increased left margin
+jpeg("boxplot_panel1.jpg")
 boxplot(ds1[,c(2:10)], horizontal=TRUE, ylim=c(0, 1000), las=1, 
         pars=list(par(mar=c(4,7,4,4))),
-        col=c("blue", "blue", "blue", "red", "red", "red", "green", "green", "green")) 
+        col=c("blue", "blue", "blue", "red", "red", "red", "green", "green", "green"),
+        main="Distribution of Gene Counts", xlab="Gene Counts") 
+legend("bottomright", legend=c("CAR/PXR", "AhR", "Cytotoxic"), 
+       fill=c("green", "red", "blue"), cex=0.75)
+dev.off()
 
 # -----------------------------------------------------------------------------
 # Produce boxplot on log-scale
@@ -32,28 +35,15 @@ ds_shifted <- ds1
 ds_shifted[,c(2:10)] <- ds1[,c(2:10)] + 0.0001
 
 # Create boxplot logscale
+jpeg("boxplot_panel2.jpg")
 boxplot(ds_shifted[,c(2:10)], horizontal=TRUE, las=1, log="x", 
         ylim=c(0.9, 1000000), pars=list(par(mar=c(4,7,4,4))),
-        col=c("blue", "blue", "blue", "red", "red", "red", "green", "green", "green")) 
+        col=c("blue", "blue", "blue", "red", "red", "red", "green", "green", "green"),
+        main="Distribution of Gene Counts", xlab="Gene Counts (log)") 
+dev.off()
 
 
+# Restore par defaults:
+par(previouspar)
 
-
-# TODO delete all below???-----------------------------------------------------
-boxplot(ds1$SRR1177987)
-
-boxplot(ds1$SRR1177987, ds1$SRR1177988, ds1$SRR1177989)
-boxplot(ds1[,c("SRR1177987", "SRR1177988", "SRR1177989")])
-
-
-boxplot(ds1[,c(2:10)], horizontal=TRUE, ylim=c(0, 1000), las=1) 
-
-boxplot(ds1[,c(2:10)], horizontal=FALSE, ylim=c(0, 1000))
-
-ggplot(data=ds1[,c(2:10)], mapping=aes(x))
-
-
-
-
-# Add count of 1 to each count so can plot on log-scale:
 
