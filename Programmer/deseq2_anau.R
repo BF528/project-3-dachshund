@@ -161,9 +161,11 @@ write.csv(top_ten_tib, "top_ten_diff_exp.csv", row.names=FALSE)
 
 # Initialize list:
 num_sig <- list()
+deseq_tib_list_sig_only <- list()
 
 for (exp_group in exp_modes_of_action){
-  num_sig[[exp_group]] <- length(deseq_tib_list[[exp_group]]$padj[deseq_tib_list[[exp_group]]$padj < 0.05])
+  deseq_tib_list_sig_only[[exp_group]] <- deseq_tib_list[[exp_group]][deseq_tib_list[[exp_group]]$padj < 0.05,]
+  num_sig[[exp_group]] <- length(deseq_tib_list_sig_only[[exp_group]]$padj)
 } 
 
 # Number of significant genes for each:
@@ -174,4 +176,8 @@ write.csv(data.frame(num_sig),"num_sig_genes_padj.csv", row.names=FALSE)
 
 # Create histograms -----------------------------------------------------------
 
-
+for (exp_group in exp_modes_of_action){
+  hist(deseq_tib_list_sig_only[[exp_group]]$log2FoldChange, 
+       breaks=30, xlim=c(-6, 6),
+       main=exp_group, xlab="log2 Fold Change")
+} 
