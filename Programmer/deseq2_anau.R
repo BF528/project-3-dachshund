@@ -4,15 +4,19 @@
 # module load R/4.0.2
 # Rscript deseq2_anau.R
 
-# Install packages:
-if (!requireNamespace("BiocManager", quietly = TRUE))
-  install.packages("BiocManager")
-
-BiocManager::install("DESeq2")
-BiocManager::install("apeglm")
-
-#Install hardhat:
-install.packages("hardhat", repos = "http://cran.us.r-project.org")
+#TODO update
+# If you want to install packages: 
+if (FALSE){
+  # Install packages:
+  if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+  
+  BiocManager::install("DESeq2")
+  BiocManager::install("apeglm")
+  
+  #Install hardhat:
+  install.packages("hardhat", repos = "http://cran.us.r-project.org")
+}
 
 # Import libraries:
 library(tidyverse)
@@ -67,7 +71,11 @@ tib_comb_subset <- subset(tib_comb2, select=c("Geneid", full_list))
 # Convert Geneids to rownames:
 tib_comb_subset <- column_to_rownames(tib_comb_subset, var="Geneid")
 
-# Run DESeq for each group:
+# Initialize list to store deseq results:
+deseq_list <- list()  # To store deseq objects
+deseq_tib_list  <- list()  # To store results converted to tibble:
+
+# Run DESeq for each group: ---------------------------------------------------
 for (exp_group in exp_modes_of_action){
   cat("===============================================================\n\n\n")
   print("Experimental group:")
@@ -104,6 +112,14 @@ for (exp_group in exp_modes_of_action){
   res1 <- results(dds1, contrast=c('mode_of_action', exp_group,'Control'))
   res1 <- lfcShrink(dds1, coef=2)
 
+  # Order by adjusted p-val
+  res2 <- as_tibble(res1, rownames=NA)
+  res2 <- res2 %>% arrange(padj)
+  
+  # Append results to lists:
+  deseq_list[[exp_group]] <- res1
+  deseq_tib_list[[exp_group]] <- res2
+  
   # Strip out weird characters from exp groups:
   exp_group_str <- str_replace_all(exp_group, "[[:punct:]]", "")
   print(exp_group)
@@ -111,16 +127,51 @@ for (exp_group in exp_modes_of_action){
   print(exp_group_str)
   
   # write out DE results
-  write.csv(res1, paste(exp_group_str, 'deseq_results1.csv', sep="_"))
+  write.csv(res2, paste(exp_group_str, 'deseq_results1.csv', sep="_"))
   
   # write out matrix of normalized counts
   write.csv(counts(dds1,normalized=TRUE),
             paste(exp_group_str, 'deseq_norm_counts1.csv', sep="_"))
 }
 
+# Write table with top 10 results: --------------------------------------------
+
+# Initialize list to store reformatted tibbles:
+deseq_tib_list2 <- list()
+
+for (exp_group in exp_modes_of_action){
+  # Convert rownames to own column:
+  deseq_tib_list2[[exp_group]] <- rownames_to_column(deseq_tib_list[[exp_group]], var="Geneid")
+
+  # Change column names:
+  colnames(deseq_tib_list2[[exp_group]]) <- paste(exp_group, colnames(deseq_tib_list2[[exp_group]]), sep="_")
+} 
+
+# Print head of each tibble in list:
+print(deseq_tib_list2)
+
+# Create CSV with top 10 results:
+top_ten_tib <- bind_cols(deseq_tib_list2$AhR[c(1:10), c(1, 6)],
+                          deseq_tib_list2$`CAR/PXR`[c(1:10), c(1, 6)], 
+                          deseq_tib_list2$Cytotoxic[c(1:10), c(1, 6)])
+write.csv(top_ten_tib, "top_ten_diff_exp.csv", row.names=FALSE)
 
 
+# Determine # of significant genes for each:----------------------------------
 
+# Initialize list:
+num_sig <- list()
 
+for (exp_group in exp_modes_of_action){
+  num_sig[[exp_group]] <- length(deseq_tib_list[[exp_group]]$padj[deseq_tib_list[[exp_group]]$padj < 0.05])
+} 
+
+# Number of significant genes for each:
+num_sig
+
+# Write to CSV:
+write.csv(data.frame(num_sig),"num_sig_genes_padj.csv", row.names=FALSE)
+
+# Create histograms -----------------------------------------------------------
 
 
