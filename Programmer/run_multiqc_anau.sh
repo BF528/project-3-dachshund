@@ -12,23 +12,22 @@ source /etc/bashrc
 # Check status: qstat -u anau
 
 # Create environment:
-conda create -n conda_20210323
+conda create -n conda_20210325
 # Activate environment
-conda activate conda_20210323
+conda activate conda_20210325
 # Check python module available:
 module avail python
 # Install python:
 conda install python=3.6.6
 # Install miniqc:
 pip install multiqc
-# Module load python2 instead:
+# Switch to python2:
 module load python2
 # load multiqc:
 module load multiqc
 # Run multiqc:
-multiqc /projectnb2/bf528/users/dachshund/project_3/programmer/featureCounts_dryrun
+multiqc /projectnb2/bf528/users/dachshund/project_3/programmer/featureCounts_ourSamples
 
 # To deactivate environment:
 conda deactivate
-
 
