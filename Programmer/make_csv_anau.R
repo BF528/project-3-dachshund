@@ -1,5 +1,12 @@
 # Combines featureCounts_output files into one csv file
 
+# To run from command line:
+# module load R/4.0.2
+# Rscript make_csv_anau.R
+
+#Install janitor:
+install.packages("janitor", repos = "http://cran.us.r-project.org")
+
 # Import libraries:
 library(tidyverse)
 library(janitor)
@@ -26,14 +33,15 @@ for (i in 1:num_files){
   }
 }
 
+# Check column names:
+names(comb_tib)
+
 # Shorten column names:
 # WARNING: THIS STEP MAY CAUSE ERRORS IF NOT UPDATED CORRECTLY
 # Example full column name:
-# X.project.bf528.project_3.samples.SRR1178055__rn4_STAR__sortedByCoord.bam
-# names(comb_tib) <- substring(names(comb_tib), first=27, last=45)
-# TODO: adjust for our actual files: (can maybe instead remove first row?)
-names(comb_tib) <- sub("X.project.bf528.project_3.samples.", "", names(comb_tib))
-names(comb_tib) <- sub("__rn4_STAR__sortedByCoord.bam", "", names(comb_tib))
+# X.projectnb2.bf528.users.dachshund.project_3.samples.STAR_output.SRR1178046Aligned.sortedByCoord.out.bam
+names(comb_tib) <- sub("X.projectnb2.bf528.users.dachshund.project_3.samples.STAR_output.", "", names(comb_tib))
+names(comb_tib) <- sub("Aligned.sortedByCoord.out.bam", "", names(comb_tib))
 
 # Write csv:
 write.csv(comb_tib, file="featureCounts_combined.csv", row.names=FALSE)
