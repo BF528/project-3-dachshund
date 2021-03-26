@@ -1,6 +1,7 @@
 # Combines featureCounts_output files into one csv file
 
 # To run from command line:
+# Adjust install package boolean in script if installing packages is needed
 # module load R/4.0.2
 # Rscript make_csv_anau.R
 
@@ -9,7 +10,7 @@ if (FALSE){
   #Install janitor:
   install.packages("janitor", repos = "http://cran.us.r-project.org")
 }
-  
+
 # Import libraries:
 library(tidyverse)
 library(janitor)
