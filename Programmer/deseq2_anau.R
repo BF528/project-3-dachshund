@@ -1,4 +1,4 @@
-# Runs deseq2_anau.R
+# Runs deseq analysis and creates relevant plots
 
 # To run from command line:
 # Adjust install package boolean in script if installing packages is needed
