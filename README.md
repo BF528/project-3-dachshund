@@ -13,10 +13,10 @@ Biologist: Mae Rose Gott
 
 Provide a brief description of each script/code file in this repo, what it does, and how to execute it
 
-## Programs from Data Curator, Sheila Yee:
+### Programs from Data Curator, Sheila Yee:
 
-## Programs from Programmer, Allison Nau:
+### Programs from Programmer, Allison Nau:
 
-## Programs from Analyst, Abhishek Thakar:
+### Programs from Analyst, Abhishek Thakar:
 
-## Programs from Biologist, Mae Rose Gott:
+### Programs from Biologist, Mae Rose Gott:
