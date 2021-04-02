@@ -16,10 +16,8 @@ Provide a brief description of each script/code file in this repo, what it does,
 ### Programs from Data Curator, Sheila Yee:
 
 ### Programs from Programmer, Allison Nau:
-
-    ```{sh} 
     qsub run_featurecounts_anau.sh
-    ```
+   
 
 ### Programs from Analyst, Abhishek Thakar:
 
