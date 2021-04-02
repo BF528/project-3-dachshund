@@ -17,6 +17,8 @@ Provide a brief description of each script/code file in this repo, what it does,
 
 ### Programs from Programmer, Allison Nau:
 
+== Highlight syntax? == 
+
 ### Programs from Analyst, Abhishek Thakar:
 
 ### Programs from Biologist, Mae Rose Gott:
