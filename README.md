@@ -17,7 +17,7 @@ Provide a brief description of each script/code file in this repo, what it does,
 
 ### Programs from Programmer, Allison Nau:
 
-#####run_featurecounts_anau.sh##### 
+####run_featurecounts_anau.sh####  
 Counts genes by running featureCounts for *Aligned.sortedByCoord.out.bam files stored in 
 /projectnb2/bf528/users/dachshund/project_3/samples/STAR_output
 with the reference GTF annotation file stored in:
