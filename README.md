@@ -17,7 +17,7 @@ Provide a brief description of each script/code file in this repo, what it does,
 
 ### Programs from Programmer, Allison Nau:
 
-==Highlight syntax?== 
+<div class="bg-yellow mb-2">Highlight syntax?</div>
 
 ### Programs from Analyst, Abhishek Thakar:
 
