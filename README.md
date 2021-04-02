@@ -16,11 +16,17 @@ Provide a brief description of each script/code file in this repo, what it does,
 ### Programs from Data Curator, Sheila Yee:
 
 ### Programs from Programmer, Allison Nau:
-    qsub run_featurecounts_anau.sh
 
+######run_featurecounts_anau.sh######: Counts genes by running featureCounts for *Aligned.sortedByCoord.out.bam files stored in 
+/projectnb2/bf528/users/dachshund/project_3/samples/STAR_output
+with the reference GTF annotation file stored in:
+/project/bf528/project_3/reference/rn4_refGene_20180308.gtf
+
+To run, submit as a job:
 ```
 qsub run_featurecounts_anau.sh
 ```
+
 
 ### Programs from Analyst, Abhishek Thakar:
 
