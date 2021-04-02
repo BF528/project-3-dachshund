@@ -16,7 +16,6 @@ Provide a brief description of each script/code file in this repo, what it does,
 ### Programs from Data Curator, Sheila Yee:
 
 ### Programs from Programmer, Allison Nau:
-
 #### run_featurecounts_anau.sh #### 
 Counts genes by running featureCounts for “*Aligned.sortedByCoord.out.bam” files stored in 
 /projectnb2/bf528/users/dachshund/project_3/samples/STAR_output
@@ -27,6 +26,7 @@ To run, submit as a job on the cluster:
 ```
 qsub run_featurecounts_anau.sh
 ```
+Outputs text count files and text summary files for each sample.
 
 #### run_multiqc_anau.sh ####
 Runs the quality control multiqc on feature counts stored in:
@@ -36,16 +36,17 @@ To run, submit as a job on the cluster:
 ```
 qsub run_multiqc_anau.sh
 ```
+Outputs html summary report as well as report supporting files.
 
 #### make_csv_anau.R  ####
-Combines featureCounts_output files into one csv file. Feature count files must be in the current working directory. If packages are note already installed, within R script change install packages to TRUE. Recommend running through Rstudio. To run through command line instead:
+Combines featureCounts_output files into one csv file “featureCounts_combined.csv”. Feature count files must be in the current working directory. If packages are note already installed, within R script change install packages to TRUE. Recommend running through Rstudio. To run through command line instead:
 ```
 module load R/4.0.2
 Rscript make_csv_anau.R
 ```
 
 #### count_dist_anau.R ####
-Creates boxplot of count distribution for samples. “featureCounts_combined.csv” must already be made using make_csv_anau.R and in the current working directory. Meta data “toxgroup_1_rna_info.csv” must also be in current working directory. Recommend running through Rstudio. To run through command line instead:
+Creates boxplot of count distribution for samples (jpg). “featureCounts_combined.csv” must already be made using make_csv_anau.R and in the current working directory. Meta data “toxgroup_1_rna_info.csv” must also be in current working directory. Recommend running through Rstudio. To run through command line instead:
 ```
 module load R/4.0.2
 Rscript count_dist_anau.R
@@ -57,6 +58,8 @@ Runs differential expression analysis using DESeq2. Experimental count file “f
 module load R/4.0.2
 Rscript deseq2_anau.R
 ```
+Outputs deseq result csv’s for each experimental group, outputs deseq normalized counts for each experimental group, outputs table of top 10 differentially expressed genes (“top_ten_diff_exp.csv”), outputs table of number of significantly differentially expressed according to padj value (“num_sig_genes_padj.csv”), creates histograms for significant genes for each experimental group (jpg), and creates scatter plots of log2 fold change compared to nominal p-value of significantly expressed genes (jpg).
+
 
 
 
