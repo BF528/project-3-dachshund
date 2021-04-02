@@ -17,7 +17,9 @@ Provide a brief description of each script/code file in this repo, what it does,
 
 ### Programs from Programmer, Allison Nau:
 
-    ```{sh} Test highlight ```
+    ```{sh} 
+    qsub run_featurecounts_anau.sh
+    ```
 
 ### Programs from Analyst, Abhishek Thakar:
 
