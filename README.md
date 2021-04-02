@@ -17,7 +17,7 @@ Provide a brief description of each script/code file in this repo, what it does,
 
 ### Programs from Programmer, Allison Nau:
 
-    ```sh Test highlight ```
+    ```{sh} Test highlight ```
 
 ### Programs from Analyst, Abhishek Thakar:
 
