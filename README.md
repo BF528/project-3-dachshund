@@ -4,8 +4,19 @@ A brief description of what this repository is for and what it contains
 
 # Contributors
 
-List contributor names and github user names, or email addresses if desired
+Data Curator: Sheila Yee
+Programmer: Allison Nau
+Analyst: Abhishek Thakar
+Biologist: Mae Rose Gott
 
 # Repository Contents
 
 Provide a brief description of each script/code file in this repo, what it does, and how to execute it
+
+## Programs from Data Curator, Sheila Yee:
+
+## Programs from Programmer, Allison Nau:
+
+## Programs from Analyst, Abhishek Thakar:
+
+## Programs from Biologist, Mae Rose Gott:
