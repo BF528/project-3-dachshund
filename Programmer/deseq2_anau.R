@@ -210,7 +210,9 @@ for (exp_group in exp_modes_of_action){
   temp_filename <- paste(exp_group_str, "siggene_scatter.jpg", sep="_")
   jpeg(temp_filename)
   plot(deseq_tib_list_sig_only[[exp_group]]$log2FoldChange, 
-      deseq_tib_list_sig_only[[exp_group]]$pvalue,
-      main=exp_group, xlab="log2 Fold Change", ylab="nominal p-value")
+       -log(deseq_tib_list_sig_only[[exp_group]]$pvalue),
+       main=exp_group, xlab="log2 Fold Change", ylab="-log(nominal p-value)")
   dev.off()
 } 
+
+
