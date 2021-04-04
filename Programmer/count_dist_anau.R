@@ -1,5 +1,8 @@
 # Creates boxplot of count distribution for samples
 
+# Clean R session:
+rm(list=ls())
+
 # Import libraries:
 library(tidyverse)
 
