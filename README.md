@@ -47,7 +47,7 @@ ST.out.tab - contains high confidence collapsed splice junctions in a tab-delimi
 Reports summary statistics from FastQC and STAR alignment. 
 To run MultiQC, submit the job on the cluster:
 ```
-qsub mutliqc.sh
+qsub multiqc.sh
 ```
 This outputs a HTML report file called multiqc_report.html. Launching the report will display the report in a browser. 
 
