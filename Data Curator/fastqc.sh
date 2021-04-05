@@ -1,3 +1,5 @@
+# author: Sheila Yee
+
 #!/bin/bash -l
 
 #$ -P bf528

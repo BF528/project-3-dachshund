@@ -1,9 +1,11 @@
+# author: Sheila Yee
+
 #!/bin/bash -l
 
 #$ -P bf528
 #$ -cwd
 #$ -pe omp 16
-#
+
 source /etc/bashrc
 
 # load STAR into the environment
