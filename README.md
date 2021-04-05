@@ -15,8 +15,7 @@ Provide a brief description of each script/code file in this repo, what it does,
 
 ### Programs from Data Curator, Sheila Yee:
 #### fastqc.sh ####
-Runs quality control checks on raw sequencing data that is stored in "*fastqc.gz"* files stored in 
-/projectnb/bf528/users/dachshund/project_3/samples by using the FastQC module. 
+Runs quality control checks on raw sequencing data that is stored in "*fastqc.gz"* files stored in /projectnb/bf528/users/dachshund/project_3/samples by using the FastQC module. 
 
 To run, submit as a job on the cluster: 
 ```
@@ -27,24 +26,22 @@ This outputs "*fastqc.zip"* and "*.html"* files for each sample that contain the
 #### STAR.sh ####
 Aligns the paired-end reads to reference rat genome that can be found in /project/bf528/project_3/reference/rn4_STAR. 
 
-To use the STAR aligner, submit as a job on the cluster using positional arguments. For each paired-end read, 
-the first and second positional arguments should be the first and second of the paired-end read, respectively. 
-The third positional argument is to specify a unique prefix name for each output file. Script should be run in working
-directory containing the the raw sequencing data.
+To use the STAR aligner, submit as a job on the cluster using positional arguments. For each paired-end read, the first and second positional arguments should be the first and second of the paired-end read, respectively. The third positional argument is to specify a unique prefix name for each output file. Script should be run in working directory containing the the raw sequencing data.
 ```
 qsub STAR.sh SRR1177987_1.fastq.gz SRR1177987_2.fastq.gz SRR1177987_1
 ```
 For each "*fastqc.gz"* file, there will be 5 output files, each prefixed with the third positional argument input. 
 The files are as follows: 
 ```
-Log.final.out - a summary of mapping statistics for each sample
-Aligned.sortedByCoord.out.bam - binary version of a SAM file containing the aligned reads that are sorted by coordinate
-Log.out - contains information about each run
-Log.progess.out - a report containing information about the job progress that is updated throughout the run 
-ST.out.tab - contains high confidence collapsed splice junctions in a tab-delimited format
+Log.final.out                   a summary of mapping statistics for each sample
+Aligned.sortedByCoord.out.bam   binary version of a SAM file containing the aligned reads that are sorted by coordinate
+Log.out                         contains information about each run
+Log.progess.out                 a report containing information about the job progress that is updated throughout the run 
+ST.out.tab                      contains high confidence collapsed splice junctions in a tab-delimited format
 ```
 #### multiqc.sh ####
 Reports summary statistics from FastQC and STAR alignment. 
+
 To run MultiQC, submit the job on the cluster:
 ```
 qsub multiqc.sh
@@ -95,9 +92,6 @@ module load R/4.0.2
 Rscript deseq2_anau.R
 ```
 Outputs deseq result csv’s for each experimental group, outputs deseq normalized counts for each experimental group, outputs table of top 10 differentially expressed genes (“top_ten_diff_exp.csv”), outputs table of number of significantly differentially expressed according to padj value (“num_sig_genes_padj.csv”), creates histograms for significant genes for each experimental group (jpg), and creates scatter plots of log2 fold change compared to nominal p-value of significantly expressed genes (jpg).
-
-
-
 
 ### Programs from Analyst, Abhishek Thakar:
 
