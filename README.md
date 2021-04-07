@@ -95,7 +95,11 @@ Rscript deseq2_anau.R
 Outputs deseq result csv’s for each experimental group, outputs deseq normalized counts for each experimental group, outputs table of top 10 differentially expressed genes (“top_ten_diff_exp.csv”), outputs table of number of significantly differentially expressed according to padj value (“num_sig_genes_padj.csv”), creates histograms for significant genes for each experimental group (jpg), and creates scatter plots of log2 fold change compared to nominal p-value of significantly expressed genes (jpg).
 
 ### Programs from Analyst, Abhishek Thakar:
+#### run_limma.R ####
+Using the skeleton of a code provided by the project directory, was able to create logFC plots for microarray data on tox group 1 after filtering by P.value < 0.05. Was able to see whether the histograms was centered around 0 or if there was a change in upregulated/downregulated DEGs. In addition to that, the logFC was plotted against -log(p-value) to create volcano plots for better visualization of statistically significant DEGs. Used ggplot2. Needs to use limma package from Bioconductor.
 
+#### project3_part6.R ####
+The code to create concordance plots from Wang et al. This code required heavy subsets and removal of column X.1 to compare RNA-seq to microarray data using the mapping reference that was provided. Points for overall DEGs and concordance were calculated and plotted per chemical. The same RNA-seq and microarray data was also subset and separated by median (above and below) and the respective concordances were calculated and plotted on a bar plot with the overall per chemical.
 ### Programs from Biologist, Mae Rose Gott:
 
 #### Step7.R ####
