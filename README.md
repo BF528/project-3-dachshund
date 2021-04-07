@@ -97,3 +97,6 @@ Outputs deseq result csv’s for each experimental group, outputs deseq normaliz
 ### Programs from Analyst, Abhishek Thakar:
 
 ### Programs from Biologist, Mae Rose Gott:
+
+#### Step7.R ####
+Merges the *_norm_counts1.csv outputted by deseq2_anau.R into one dataframe and performs clustering and outputs a heatmap on the resulting dataframe. Requires R packages "readr" v1.3.1 and "dplyr" v1.0.1 on RStudio v4.0.2
